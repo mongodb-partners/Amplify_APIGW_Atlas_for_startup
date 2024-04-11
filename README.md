@@ -24,7 +24,8 @@ high-performing, and reliable identity store.
 
 ## Reference Architecture
 
-<img width="718" alt="image" src="https://github.com/mongodb-partners/Microservice_Application_with_MongoDBAtlas_AWSCDK_APIGW_Lambda/assets/101570105/93b9925a-bbf9-4dff-a69a-a3db3923e95f">
+<img width="825" alt="image" src="https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/assets/101570105/f3150d8d-001e-4c71-a8e7-f63dcc61d601">
+
 
 1.  ## Prerequisites
 
