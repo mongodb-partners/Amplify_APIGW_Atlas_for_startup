@@ -10,6 +10,11 @@ It evolved as a "Developer Data Platform", intended to reduce the developer's wo
 the database environment.
 It also provides a free tier to test out the application/database features.
 
+
+## [AWS Amplify](https://aws.amazon.com/amplify/)
+
+Amplify provides all the essentials for building full-stack web and mobile apps on AWS. Develop the frontend, incorporate features like authentication and storage, connect to real-time data sources, deploy, and scale to millions of users.
+
 ## [Amazon API Gateway](https://aws.amazon.com/api-gateway/)
 
 Amazon API Gateway is a fully managed service that makes it easy for developers to create, publish, maintain, monitor,
