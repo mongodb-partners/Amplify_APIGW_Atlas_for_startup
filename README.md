@@ -39,8 +39,8 @@ high-performing, and reliable identity store.
     using US-EAST-1
 
     - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) Installed & Configured
-    - AWS CDK Installed & Configured
-    - MongoDB Atlas Account
+    - [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) Installed & Configured
+    - [MongoDB Atlas](https://www.mongodb.com/atlas/database) Account
     - [MongoDB Atlas CDK Setup](https://www.mongodb.com/developer/products/atlas/deploy-mongodb-atlas-aws-cdk-typescript/).
       Please ensure only the below setup portion of this link is completed. Not needed to complete the full demo.
 
