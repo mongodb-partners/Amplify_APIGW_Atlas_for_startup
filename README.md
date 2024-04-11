@@ -1,6 +1,6 @@
 # Microservice Application with API Architecture for Startups
 
-This is a reference architecture for API-based applications with MongoDB Atlas, APIGW, and Lambda
+This is a reference architecture for API-based applications with AWS Amplify , MongoDB Atlas, APIGW, and Lambda
 
 ## [MongoDB Atlas](https://www.mongodb.com/atlas)
 
