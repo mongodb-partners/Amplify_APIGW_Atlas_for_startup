@@ -1,4 +1,4 @@
-# Microservice_Application_with_MongoDBAtlas_AWSCDK_APIGW_Lambda
+# Microservice Application with API Architecture for Startups
 
 This is a reference architecture for API-based applications with MongoDB Atlas, APIGW, and Lambda
 
