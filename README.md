@@ -31,6 +31,11 @@ high-performing, and reliable identity store.
 
 <img width="825" alt="image" src="https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/assets/101570105/f3150d8d-001e-4c71-a8e7-f63dcc61d601">
 
+## Sample output
+
+<img width="1028" alt="image" src="https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/assets/101570105/cf1ffe14-b46b-4fec-80cd-0080a3979840">
+
+
 
 1.  ## Prerequisites
 
