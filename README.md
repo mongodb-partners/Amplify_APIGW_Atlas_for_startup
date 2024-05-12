@@ -163,27 +163,38 @@ Navigate to the Cognito user pool and copy the User Pool ID and Client ID (App I
 
 Open Cloud Shell and create a user with the command mentioned below
 
-   	```aws cognito-idp admin-create-user --user-pool-id  <YOUR_USER_POOL_ID>  --username apigwtest```
+   	```bash 
+    aws cognito-idp admin-create-user --user-pool-id  <YOUR_USER_POOL_ID>  --username apigwtest
+    
+    ```
 
 Force the user login through a secured password.
 
-    ```aws cognito-idp admin-set-user-password --user-pool-id <YOUR_USER_POOL_ID>  --username apigwtest  --password <PASSWORD> --permanent```
+    ```bash
+    aws cognito-idp admin-set-user-password --user-pool-id <YOUR_USER_POOL_ID>  --username apigwtest  --password <PASSWORD> --permanent
+    ```
 
 Replace the User Pool ID and Client ID copied in the above step and also replace the user name and password of the user
 created above
 
- 	```aws cognito-idp admin-initiate-auth --user-pool-id <YOUR_USER_POOL_ID> --client-id <CLIENT_ID>  --auth-flow ADMIN_NO_SRP_AUTH --auth-parameters USERNAME=apigwtest,PASSWORD=<PASSWORD>```
+ 	```bash
+    aws cognito-idp admin-initiate-auth --user-pool-id <YOUR_USER_POOL_ID> --client-id <CLIENT_ID>  --auth-flow ADMIN_NO_SRP_AUTH --auth-parameters USERNAME=apigwtest,PASSWORD=<PASSWORD>
+    ```
 
 Copy the **Id Token** created from the above step and run the below command to test the API. Copy the API_GATEWAY_ENDPOINT
 from the API Gateway console --> API Gateway: APIs: ApiGateway (xxxxxx) :Stages
 
- 	curl --location --request GET 'https://<API_GATEWAY_ENDPOINT>.execute-api.us-east-1.amazonaws.com/dev' --header 'Content-Type: application/json' --header 'Authorization: <ID_TOKEN>'
+ 	```bash
+    curl --location --request GET 'https://<API_GATEWAY_ENDPOINT>.execute-api.us-east-1.amazonaws.com/dev' --header 'Content-Type: application/json' --header 'Authorization: <ID_TOKEN>'
+    ```
 
 ## Creating the frontend application
 
 Switch into the frontend project.
 
+    ```bash
     cd aws_mongodb_sample/frontend
+    ```
 
 Add th URL you retrieved in the above test step to the TodoList.jsx script.
 
@@ -191,19 +202,27 @@ Add th URL you retrieved in the above test step to the TodoList.jsx script.
 
 First, you need to initialize Amplify. You can keep the default settings for this.
 
+    ```bash
     amplify init
+    ```
 
 Next, we need to add hosting to the project. Choose `Hosting with Amplify Console` and `Manual deployment`.
 
+    ```bash
     amplify hosting add
+    ```
 
 Whenever you make changes:
 
+    ```bash
     amplify push
+    ```
 
 Finally, we can publish the frontend.
 
+    ```bash
     amplify publish
+    ```
 
 ## **Clean up**
 
