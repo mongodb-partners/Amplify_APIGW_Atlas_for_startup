@@ -43,7 +43,10 @@ high-performing, and reliable identity store.
     using US-EAST-1
 
     - [Create a MongoDB Cloud account](https://www.mongodb.com/resources/products/platform/mongodb-atlas-tutorial#creating-a-mongodb-atlas-account) 
-        Note: only the MongoDB cloud account is sufficient. During the course of the demo, we are setting up the project , cluster and database.
+        
+        
+        Note: It is sufficient to setup only the MongoDB Cloud Account for now. During the course of this demo setup, we build the Project,Cluster and Database.
+
 
     - Create an [API Key in an Organization](https://www.mongodb.com/docs/atlas/configure-api-access/#create-an-api-key-in-an-organization) and grant project owner permission and open access (0.0.0.0/1) for this demo purpose. 
 
@@ -54,7 +57,7 @@ high-performing, and reliable identity store.
     - Get the [AWS AMPLIFY](https://docs.amplify.aws/gen1/react/tools/cli/start/set-up-cli/) installed for ReactJS & Configured
 
 
-    - Set up the Pythong virtual environment  
+    - Set up the Python virtual environment  
 
     - Python3 - `yum install -y python3`
     - Python Pip - `yum install -y python-pip`
@@ -87,10 +90,10 @@ high-performing, and reliable identity store.
     cd aws_mongodb_sample
 	pip install --target ./dependencies pymongo
 	cd ..
-
+    ```
     # Set Environment Variables
 
-    Run the cloudformation temaplate with the profile-secret-role.yaml file. 
+    Run the [AWS CloudFormation template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-new-stack.html) with the [profile-secret-role.yaml](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/profile-secret-role.yaml) file. 
     
         1. This template creates a secreats in the AWS Secret Manager to store the following
         
@@ -106,22 +109,22 @@ high-performing, and reliable identity store.
 
     set up the AWS environment variables
 
-    ```
+    ```bash       
     export AWS_ACCESS_KEY_ID="Enter the AWS Access Key"
     export AWS_SECRET_ACCESS_KEY="Enter the AWS Secret Access Key"
     export AWS_SESSION_TOKEN="Enter the AWS Session Token" 
-    ```  
+     ```        
 
-    Set up the Global parameter in global_args.py
+    Set up the Global parameter in [global_args.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/global_args.py)
+
 
     Set up the AWS CDK Bootstrap and check the CDK stacks - **AwsMongodbAtlasCreateStack**  & **AwsMongodbSampleStack** - are listed.
     
-    ```
-    cdk bootstrap 
 
-    cdk ls
-
-    ```
+    ```bash       
+        cdk bootstrap
+        cdk ls
+     ``` 
 
 1.  ## Deploying the application
 
@@ -145,6 +148,7 @@ high-performing, and reliable identity store.
       c)    Lambda function that will create a database , insert dummy data and return document count
 
       d)    API Gateway backed by the lambda function created above
+
 
       ```bash
       cdk deploy --all
