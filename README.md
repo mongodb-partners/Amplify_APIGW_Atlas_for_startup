@@ -31,11 +31,10 @@ high-performing, and reliable identity store.
 
 <img width="825" alt="image" src="https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/assets/101570105/f3150d8d-001e-4c71-a8e7-f63dcc61d601">
 
+
 ## Sample output
 
 <img width="1028" alt="image" src="https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/assets/101570105/cf1ffe14-b46b-4fec-80cd-0080a3979840">
-
-
 
 1.  ## Prerequisites
 
@@ -43,24 +42,23 @@ high-performing, and reliable identity store.
     modifications, you can try it out in other regions as well. Make sure to change REGION_NAME in global_args.py if not
     using US-EAST-1
 
-    - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) Installed & Configured
-    - [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) Installed & Configured
-    - [MongoDB Atlas](https://www.mongodb.com/atlas/database) Account
-    - [MongoDB Atlas CDK Setup](https://www.mongodb.com/developer/products/atlas/deploy-mongodb-atlas-aws-cdk-typescript/).
-      Please ensure only the below setup portion of this link is completed. Not needed to complete the full demo.
+    - [Create a MongoDB Cloud account](https://www.mongodb.com/resources/products/platform/mongodb-atlas-tutorial#creating-a-mongodb-atlas-account) 
+        Note: only the MongoDB cloud account is sufficient. During the course of the demo, we are setting up the project , cluster and database.
 
-      a. Ensure the MongoDB organization API keys are stored in the AWS Secrets. Use the AWS
-      CloudFormation [Template](https://github.com/mongodb/awscdk-resources-mongodbatlas/blob/main/examples/profile-secret.yaml).
+    - Create an [API Key in an Organization](https://www.mongodb.com/docs/atlas/configure-api-access/#create-an-api-key-in-an-organization) and grant project owner permission and open access (0.0.0.0/1) for this demo purpose. 
 
-      b. Ensure the AWS Roles are created. Use the AWS
-      CloudFormation [Template](https://github.com/mongodb/mongodbatlas-cloudformation-resources/blob/master/examples/execution-role.yaml)
+    Side Note: Please note this setting is not suitable for production environment and the access should be restricted based on your policies.
 
-      c. Ensure the CloudFormation Public Extensions of MongoDB are activated in the Registry.
+    - Get the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) Installed & Configured
+    - Get the [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) Installed & Configured
+    - Get the [AWS AMPLIFY](https://docs.amplify.aws/gen1/react/tools/cli/start/set-up-cli/) installed for ReactJS & Configured
 
-    - Python Packages :
+
+    - Set up the Pythong virtual environment  
+
     - Python3 - `yum install -y python3`
     - Python Pip - `yum install -y python-pip`
-    - Virtualenv - `pip3 install virtualenv`
+    - Virtualenv - `pipx install virtualenv`
 
 1.  ## Setting up the environment
 
@@ -91,24 +89,38 @@ high-performing, and reliable identity store.
 	cd ..
 
     # Set Environment Variables
-    export ORG_ID="<ORG_ID>"
-    export MONGODB_USER="<MONGODB_USER>"
-    export MONGODB_PASSWORD="<MONGODB_PASSWORD>"
 
-    cdk bootstrap aws://<ACCOUNT_NUMBER>/<AWS-REGION> 
+    Run the cloudformation temaplate with the profile-secret-role.yaml file. 
+    
+        1. This template creates a secreats in the AWS Secret Manager to store the following
+        
+        MonogDB Atlas Organization ID
+        MongoDB Atlas Organization API credentials - Public Key and Private Key . Note this is created during the prerequisite.
+        MongoDB Atlas Databse User Credentials - User Name and Password
+        AWS Account ID
+
+        2. The template also creates the role and permissions required to setup the MongoDB Atlas through AWS CDK
+
+    Run the Python script mongodb_prep_setup.py to activate the Cloudformation registry - MongoDB (private) extensions with the appropriate role.
+
+
+    set up the AWS environment variables
 
     ```
+    export AWS_ACCESS_KEY_ID="Enter the AWS Access Key"
+    export AWS_SECRET_ACCESS_KEY="Enter the AWS Secret Access Key"
+    export AWS_SESSION_TOKEN="Enter the AWS Session Token" 
+    ```  
 
-    ```bash
+    Set up the Global parameter in global_args.py
+
+    Set up the AWS CDK Bootstrap and check the CDK stacks - **AwsMongodbAtlasCreateStack**  & **AwsMongodbSampleStack** - are listed.
+    
+    ```
+    cdk bootstrap 
+
     cdk ls
-    # Follow on screen prompts
-    ```
 
-    You should see an output of the available stacks,
-
-    ```bash
-    AwsMongodbAtlasCreateStack
-    AwsMongodbSampleStack
     ```
 
 1.  ## Deploying the application
@@ -117,16 +129,11 @@ high-performing, and reliable identity store.
 
     - **Stack: AwsMongodbAtlasCreateStack**
 
-      This stack will create four resources and return Mongo Db Atlas URL
+        This stack will setup the MongoDB Projects, Cluster and Database. It will also setup the user access and network access to the database.
+        
+        **Side Note:** For this demo purpose the network access is set to 0.0.0.0/0. This is not recommended for production environments.
 
-      a)    MongoDB::Atlas::Cluster
-
-      b)    MongoDB::Atlas::Project
-
-      c)    MongoDB::Atlas::DatabaseUser
-
-      d)    MongoDB::Atlas::ProjectIpAccessList
-
+          
     - **Stack: AwsMongodbSampleStack**
 
       This stack will create
@@ -143,29 +150,27 @@ high-performing, and reliable identity store.
       cdk deploy --all
       ```
 
-      After successfully deploying the stack, Check the `Outputs` section of the stack aws_mongodb_sample_stack, you
-      will see ApiGatewayEndpoint created.
+After successfully deploying the stack, Check the `Outputs` section of the stack to verify all the resource are created successfully.
 
-## **Test**
 
-Navigate to the Cognito user pool and copy the User Pool ID and Client ID (App Integration tab)  from the Cognito User
-pool
+## **Setup the Cognito user to check the access to the API Gateway Endpoint**
+
+Navigate to the Cognito user pool and copy the User Pool ID and Client ID (App Integration tab)  from the Cognito User pool
 
 Open Cloud Shell and create a user with the command mentioned below
 
-   	aws cognito-idp admin-create-user --user-pool-id  <YOUR_USER_POOL_ID>  --username apigwtest
+   	```aws cognito-idp admin-create-user --user-pool-id  <YOUR_USER_POOL_ID>  --username apigwtest```
 
-Once the user is created since it’s created by admin we will have to force change the password by running the below
-command
+Force the user login through a secured password.
 
-    aws cognito-idp admin-set-user-password --user-pool-id <YOUR_USER_POOL_ID>  --username apigwtest  --password <PASSWORD> --permanent
+    ```aws cognito-idp admin-set-user-password --user-pool-id <YOUR_USER_POOL_ID>  --username apigwtest  --password <PASSWORD> --permanent```
 
 Replace the User Pool ID and Client ID copied in the above step and also replace the user name and password of the user
 created above
 
- 	aws cognito-idp admin-initiate-auth --user-pool-id <YOUR_USER_POOL_ID> --client-id <CLIENT_ID>  --auth-flow ADMIN_NO_SRP_AUTH --auth-parameters USERNAME=apigwtest,PASSWORD=<PASSWORD>
+ 	```aws cognito-idp admin-initiate-auth --user-pool-id <YOUR_USER_POOL_ID> --client-id <CLIENT_ID>  --auth-flow ADMIN_NO_SRP_AUTH --auth-parameters USERNAME=apigwtest,PASSWORD=<PASSWORD>```
 
-Copy the ID Token created from the above step and run the below command to test the API. Copy the API_GATEWAY_ENDPOINT
+Copy the **Id Token** created from the above step and run the below command to test the API. Copy the API_GATEWAY_ENDPOINT
 from the API Gateway console --> API Gateway: APIs: ApiGateway (xxxxxx) :Stages
 
  	curl --location --request GET 'https://<API_GATEWAY_ENDPOINT>.execute-api.us-east-1.amazonaws.com/dev' --header 'Content-Type: application/json' --header 'Authorization: <ID_TOKEN>'
@@ -176,9 +181,9 @@ Switch into the frontend project.
 
     cd aws_mongodb_sample/frontend
 
-Add th URL you retrieved in the above test step to the TodoList.js script.
+Add th URL you retrieved in the above test step to the TodoList.jsx script.
 
-    const apiEndpoint = "https://o72ork5oub.execute-api.us-east-1.amazonaws.com/dev/todos";
+    const apiEndpoint = "https://XXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos";
 
 First, you need to initialize Amplify. You can keep the default settings for this.
 
@@ -199,7 +204,9 @@ Finally, we can publish the frontend.
 ## **Clean up**
 
 Use `cdk destroy --all` to clean up all the AWS CDK resources.
-Terminate the MongoDB Atlas cluster.
+
+The Amplify backend and frontend needs to be cleaned up manually.
+
 
 ## Troubleshooting
 

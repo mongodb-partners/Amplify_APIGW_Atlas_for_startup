@@ -8,7 +8,7 @@ from unittest.mock import patch, MagicMock
 os.environ["ATLAS_URI"] = "foo"
 
 # Import the lambda function
-from aws_mongodb_sample_dir.aws_mongodb_sample import lambda_function_create_todo
+from lambda_functions import lambda_function_create_todo
 
 
 class TestLambdaFunctionCreateTodo(unittest.TestCase):

@@ -1,32 +1,91 @@
-from aws_cdk import (Stack, CfnOutput, Fn)
+from aws_cdk import (Stack,CfnOutput,Fn, aws_cloudformation as cfn, aws_iam as iam)
+
 from constructs import Construct
 
-from awscdk_resources_mongodbatlas import (AdvancedRegionConfig, AdvancedReplicationSpec, DatabaseUserProps, RoleDefinition,
+
+
+from awscdk_resources_mongodbatlas import (AdvancedRegionConfig, AdvancedReplicationSpec, DatabaseUserProps,
                                            Specs, AccessListDefinition, IpAccessListProps,
                                            ProjectProps, ClusterProps, AtlasBasic,
                                            AdvancedRegionConfigProviderName)
 from global_args import GlobalArgs
-import os
-from dotenv import find_dotenv, load_dotenv
+import boto3
+import json
+import base64
+import importlib.util
+import sys
+
+# Validate if required modules are installed
+required_modules = ['aws_cdk.aws_iam', 'aws_cdk.aws_cloudformation']
+missing_modules = [module for module in required_modules if importlib.util.find_spec(module) is None]
+
+if missing_modules:
+    for module in missing_modules:
+        print(f"Error: Module '{module}' not found. Please install the required modules using 'pip install {module}'")
+    sys.exit(1)
+
+
+
+def get_secret(secret_name):
+    session = boto3.session.Session()
+    client = session.client(
+        service_name='secretsmanager',
+        region_name = GlobalArgs.AWS_REGION
+
+    )
+
+    get_secret_value_response = client.get_secret_value(
+        SecretId=secret_name
+    )
+
+    if 'SecretString' in get_secret_value_response:
+        secret = get_secret_value_response['SecretString']
+    else:
+        secret = base64.b64decode(get_secret_value_response['SecretBinary'])
+
+    return json.loads(secret)
+
+secret_name = GlobalArgs.SECRET_NAME
+secrets = get_secret(secret_name)
+
+secrets_username = secrets["MONGODBUSER"]
+secrets_password = secrets["MONGODBPASSWORD"]
+secrets_org_id = secrets["ATLASORGID"]
+secrets_account_id = secrets["AWSACCOUNTID"]
+
 
 class AwsMongodbAtlasCreateStack(Stack):
-
-  dotenv_path = find_dotenv();
-  load_dotenv(dotenv_path);
 
   def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
     super().__init__(scope, construct_id, **kwargs)
 
-    org_id_var = os.getenv("ORG_ID"),
-    region_var =  GlobalArgs.REGION_NAME,
-    profile_name_var = GlobalArgs.PROFILE,
-    ip_addr_var = GlobalArgs.IP_ADDRESS,
+    org_id_var =  secrets_org_id
+    region_var =  GlobalArgs.REGION_NAME
+    profile_name_var = GlobalArgs.PROFILE
+    ip_addr_var = GlobalArgs.IP_ADDRESS
     ip_comment_var = GlobalArgs.IP_COMMENT
     instanceSize = GlobalArgs.INSTANCE_SIZE
     ebsVolumeType = GlobalArgs.EBS_VOLUME_TYPE
     backingProviderName = GlobalArgs.BACKING_PROVIDER_NAME
-    username = os.getenv("MONGODB_USER")
-    password = os.getenv("MONGODB_PASSWORD")
+    username = secrets_username
+    password = secrets_password
+
+
+#     # Define IAM Role for Atlas execution
+#     atlas_execution_role = iam.Role(
+#             self, "AtlasExecutionRole",
+#             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
+#             description="Role for MongoDB Atlas execution",
+#             role_name="atlas_execution_role"
+#         )
+
+# # Activate CloudFormation registry for private extension "MongoDB-Atlas-Cluster"
+#     cfn.CfnTypeActivation(
+#             self, "MongoDBAtlasClusterActivation",
+#             product_name="MongoDB-Atlas-Cluster",
+#             provisioning_artifact_id="2.1.0",  # Adjust the version as necessary
+#             service_role=atlas_execution_role.role_arn
+#       )
 
     region_configs_var = [
             AdvancedRegionConfig(analytics_specs=Specs(node_count=1, instance_size=instanceSize, ebs_volume_type=ebsVolumeType),
@@ -41,7 +100,8 @@ class AwsMongodbAtlasCreateStack(Stack):
 
     self.atlas_basic_l3 = AtlasBasic(self, "AtlasBasic-py-l3",
                                     cluster_props=ClusterProps(
-                                        replication_specs = replication_specs_var
+                                        replication_specs = replication_specs_var,
+                                        name="aws-activate-startup-cluster"
                                     ),
                                     db_user_props=DatabaseUserProps(
                                         database_name=GlobalArgs.AUTH_DATABASE_NAME, 
@@ -49,7 +109,9 @@ class AwsMongodbAtlasCreateStack(Stack):
                                         password=password
                                     ),
                                     project_props=ProjectProps(
-                                        org_id = ''.join(org_id_var)
+                                        org_id = ''.join(org_id_var),
+                                        name="aws-activate-startup-project"
+
                                     ),
                                     ip_access_list_props=IpAccessListProps(
                                         access_list = access_list_defs_var

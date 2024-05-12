@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import './TodoList.css'; // Import CSS file for styling
 
+interface Todo {
+    _id: { $oid: string };
+    text: string;
+  }
+
 function TodoList() {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useState<Todo[]>([]);
     const [newTodoText, setNewTodoText] = useState('');
 
     useEffect(() => {
         fetchTodos();
     }, []);
 
-    const apiEndpoint = "https://wn5g4w1hj2.execute-api.us-east-1.amazonaws.com/dev/todos";
+    const apiEndpoint = "https://fm1kzgacr5.execute-api.us-east-1.amazonaws.com/dev/todos";
 
     const fetchTodos = async () => {
         try {
@@ -36,7 +41,7 @@ function TodoList() {
         }
     };
 
-    const handleDeleteTodo = async (todoId) => {
+    const handleDeleteTodo = async (todoId: string) => {
         try {
             const body = JSON.stringify({"id": todoId});
             await fetch(apiEndpoint, {

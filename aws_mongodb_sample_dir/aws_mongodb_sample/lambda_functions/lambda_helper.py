@@ -3,15 +3,20 @@ import logging
 import os
 from typing import Dict, Any, Final, Callable
 
+
 from boto3 import client
 from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
+import logging
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
+
 logger.setLevel(logging.DEBUG)
 
 SECRET_NAME: Final[str] = os.environ["ATLAS_URI"]
+
+
 
 
 def json_response(status_code: int, body: str) -> Dict[str, str]:

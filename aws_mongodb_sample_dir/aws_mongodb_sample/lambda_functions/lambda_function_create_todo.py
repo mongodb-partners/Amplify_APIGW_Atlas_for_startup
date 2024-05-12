@@ -5,7 +5,7 @@ from typing import Dict, Any, Union
 from pymongo.collection import Collection
 from pymongo.results import InsertOneResult
 
-from lambda_helper import json_response, safe_execute
+from lambda_functions.lambda_helper import json_response, safe_execute
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)

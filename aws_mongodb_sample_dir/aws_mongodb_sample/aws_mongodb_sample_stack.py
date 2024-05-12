@@ -3,18 +3,20 @@ import string
 from typing import Final
 
 from aws_cdk import SecretValue, Stack
-from aws_cdk.aws_apigateway import LambdaRestApi, LambdaIntegration, ResourceBase, \
-    AuthorizationType, StageOptions, CorsOptions, Cors
-from aws_cdk.aws_cognito import UserPool, CognitoDomainOptions, ResourceServerScope, UserPoolResourceServer, AuthFlow, \
-    OAuthSettings, OAuthFlows, SignInAliases, OAuthScope
+from aws_cdk.aws_apigateway import LambdaRestApi, LambdaIntegration, ResourceBase, AuthorizationType, \
+    StageOptions, CorsOptions, Cors
+from aws_cdk.aws_cognito import UserPool, CfnUserPoolDomain,CognitoDomainOptions, ResourceServerScope, \
+    UserPoolResourceServer, AuthFlow, OAuthSettings, OAuthFlows, SignInAliases, OAuthScope
 from aws_cdk.aws_lambda import Function, Runtime, Code
 from aws_cdk.aws_secretsmanager import Secret, ISecret
 from constructs import Construct
 
 
+
 class AwsMongodbSampleStack(Stack):
     ENV_NAME: Final[str] = "dev"
     SECRET_NAME: Final[str] = "ATLAS_URI3"
+
 
     def __init__(self, scope: Construct, construct_id: str, atlas_uri: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -27,7 +29,7 @@ class AwsMongodbSampleStack(Stack):
         secret_name: str = secret.secret_name
 
         user_pool: UserPool = UserPool(self, "SampleUserPool",
-                                       user_pool_name="mysample-userpool",
+                                       user_pool_name="aws-activate-startup-demo",
                                        sign_in_case_sensitive=False,
                                        sign_in_aliases=SignInAliases(
                                            username=True,
@@ -35,9 +37,13 @@ class AwsMongodbSampleStack(Stack):
                                        self_sign_up_enabled=True)
 
         random_string: str = str("".join(random.choices(string.ascii_lowercase + string.digits, k=7)))
-        domain_prefix: str = "mysample-app" + random_string
-        cognito_domain: CognitoDomainOptions = CognitoDomainOptions(domain_prefix=domain_prefix)
-        user_pool.add_domain("CognitoDomain", cognito_domain=cognito_domain)
+        domain_name: str = "mysample-app" + random_string
+        #cognito_domain: CognitoDomainOptions = CognitoDomainOptions(domain_prefix=domain_prefix)
+        #user_pool.add_domain("CognitoDomain", cognito_domain=cognito_domain)
+
+        CfnUserPoolDomain(self, "SampleUserPoolDomain",
+                        domain=domain_name,
+                        user_pool_id=user_pool.user_pool_id)
 
         # noinspection PyTypeChecker
         # cognito_user_pools_authorizer: CognitoUserPoolsAuthorizer = (
@@ -48,19 +54,19 @@ class AwsMongodbSampleStack(Stack):
 
         lambda_handler_root: Function = self._create_lambda_function(self,
                                                                      name="ApiHandlerRoot",
-                                                                     handler_name="lambda_function_root",
+                                                                     handler_name="lambda_functions.lambda_function_root",
                                                                      secret_name=secret_name)
         lambda_handler_get_todos: Function = self._create_lambda_function(self,
                                                                           name="ApiHandlerGetTodos",
-                                                                          handler_name="lambda_function_get_todos",
+                                                                          handler_name="lambda_functions.lambda_function_get_todos",
                                                                           secret_name=secret_name)
         lambda_handler_create_todo: Function = self._create_lambda_function(self,
                                                                             name="ApiHandlerCreateTodo",
-                                                                            handler_name="lambda_function_create_todo",
+                                                                            handler_name="lambda_functions.lambda_function_create_todo",
                                                                             secret_name=secret_name)
         lambda_handler_delete_todo: Function = self._create_lambda_function(self,
                                                                             name="ApiHandlerDeleteTodo",
-                                                                            handler_name="lambda_function_delete_todo",
+                                                                            handler_name="lambda_functions.lambda_function_delete_todo",
                                                                             secret_name=secret_name)
 
         secret: ISecret = Secret.from_secret_attributes(self, self.SECRET_NAME,
