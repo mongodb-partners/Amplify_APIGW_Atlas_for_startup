@@ -91,8 +91,6 @@ high-performing, and reliable identity store.
         ```
 
     - Set up the Python virtual environment
-
-        **Make sure you are in the root directory**
     
         ```bash
         python3 -m venv .venv
