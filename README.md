@@ -270,12 +270,16 @@ Whenever you make changes:
     amplify push
     ```
 
+![Amplify Push](aws_mongodb_sample_dir/images/amplify_push.png)
+
 Finally, we can publish the frontend:
 
 
     ```bash
     amplify publish
     ```
+
+![Amplify Publish](aws_mongodb_sample_dir/images/amplify_publish.png)
 
 ## **Clean up**
 
