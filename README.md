@@ -229,7 +229,7 @@ high-performing, and reliable identity store.
     cd frontend
     ```
 
-    Add the URL you retrieved in the above test step to the TodoList.jsx script:
+    Add the URL you retrieved in the above test step to the atlas_for_startup/src/TodoList.tsx script:
 
 
     ```javascript
