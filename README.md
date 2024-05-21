@@ -226,10 +226,10 @@ high-performing, and reliable identity store.
 
 
     ```bash
-    cd frontend
+    cd frontend/atlas_for_startup
     ```
 
-    Add the URL you retrieved in the above test step to the atlas_for_startup/src/TodoList.tsx script:
+    Add the URL you retrieved in the above test step to the frontend/atlas_for_startup/src/TodoList.tsx script:
 
 
     ```javascript
