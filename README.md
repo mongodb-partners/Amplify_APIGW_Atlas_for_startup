@@ -185,6 +185,10 @@ high-performing, and reliable identity store.
 
     Navigate to the Cognito user pool and copy the User Pool ID and Client ID (App Integration tab) from the Cognito User pool
 
+    ![Cognito User Pool](aws_mongodb_sample_dir/images/user_pool.png)
+
+    ![userpool_client_id](aws_mongodb_sample_dir/images/userpool_client_id.png)
+
     Open Cloud Shell and create a user with the command mentioned below:
 
 
