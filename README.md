@@ -236,28 +236,41 @@ high-performing, and reliable identity store.
     const apiEndpoint = "https://XXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos";
     ```
 
-    First, you need to initialize Amplify. You can keep the default settings for this:
+    First, configure the AWS Profile for the Amplify set up.
 
+
+    ```bash
+    amplify configure
+    ```
+
+    ![Set up the AWS Profile for Amplify ](aws_mongodb_sample_dir/images/amplify_AWS_profile.png)
+
+
+
+ Then, you need to initialize Amplify. 
 
     ```bash
     amplify init
     ```
 
-    Next, we need to add hosting to the project. Choose `Hosting with Amplify Console` and `Manual deployment`:
+Next, we need to add hosting to the project. Choose `Hosting with Amplify Console` and `Manual deployment`:
 
 
     ```bash
     amplify hosting add
     ```
 
-    Whenever you make changes:
+![Amplify Initialize](aws_mongodb_sample_dir/images/amplify_init.png)
+
+
+Whenever you make changes:
 
 
     ```bash
     amplify push
     ```
 
-    Finally, we can publish the frontend:
+Finally, we can publish the frontend:
 
 
     ```bash
