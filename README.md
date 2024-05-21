@@ -125,13 +125,17 @@ high-performing, and reliable identity store.
 
          ![Organization_API_access](aws_mongodb_sample_dir/images/Organization_API_access.png)
 
-        - MongoDB Atlas Database User Credentials - User Name and Password
-        
+        - MongoDB Atlas Database User Credentials - User Name and Password of your choice
+
         - AWS Account ID
 
         - The template also creates the role and permissions required to set up the MongoDB Atlas through AWS CDK
 
         B. Run the Python script [mongodb_prep_setup.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/mongodb_prep_setup.py) to activate the Cloudformation registry - MongoDB (private) extensions with the appropriate role.
+
+        ```bash 
+        python mongodb_prep_setup.py
+        ```
 
 
     - Set up the AWS CDK Bootstrap and check the CDK stacks - **AwsMongodbAtlasCreateStack**  & **AwsMongodbSampleStack** - are listed.
@@ -143,6 +147,15 @@ high-performing, and reliable identity store.
         ``` 
 
 1.  ## Deploying the application
+
+
+    ```bash
+    cdk deploy --all
+    ```
+
+    Press "Y" to continue for deploying the AWS services
+
+    ![CDK_Confirmation](aws_mongodb_sample_dir/images/CDK_Confirmation.png)
 
     Let us walk through each of the stacks,
 
@@ -164,11 +177,6 @@ high-performing, and reliable identity store.
         c) Lambda function that will create a database, insert dummy data, and return document count
 
         d) API Gateway backed by the lambda function created above
-
-
-    ```bash
-    cdk deploy --all
-    ```
 
     After successfully deploying the stack, check the `Outputs` section of the stack to verify that all the resources are created successfully.
 
