@@ -107,11 +107,6 @@ high-performing, and reliable identity store.
     - Verify the values for the Global Parameters [global_args.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/global_args.py) and update as per your requirements.
 
     - Set up the secret key values and prerequisite roles and permission for MongoDB CDK.
-
-        A. Login to AWS Console and run the [AWS CloudFormation template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-new-stack.html) with the [profile-secret-role.yaml](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/profile-secret-role.yaml) file. 
-
-
-        ![Set up the prerequisite for AWS MongoDB CDK](aws_mongodb_sample_dir/images/AWS_CDK_MongoDB_prerequisite.png)
     
         This template creates secrets in the AWS Secret Manager to store the following:
     
@@ -128,6 +123,13 @@ high-performing, and reliable identity store.
         - AWS Account ID
 
         - The template also creates the role and permissions required to set up the MongoDB Atlas through AWS CDK
+
+
+        A. Login to AWS Console and run the [AWS CloudFormation template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-new-stack.html) with the [profile-secret-role.yaml](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/profile-secret-role.yaml) file. 
+
+
+        ![Set up the prerequisite for AWS MongoDB CDK](aws_mongodb_sample_dir/images/AWS_CDK_MongoDB_prerequisite.png)
+
 
         B. Run the Python script [mongodb_prep_setup.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/mongodb_prep_setup.py) to activate the Cloudformation registry - MongoDB (private) extensions with the appropriate role.
 
