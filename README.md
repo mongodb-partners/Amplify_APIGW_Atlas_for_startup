@@ -38,17 +38,19 @@ high-performing, and reliable identity store.
 
 1.  ## Prerequisites
 
-    - Using the link "Sign up" or "Sign in" for a [MongoDB Cloud account](https://www.mongodb.com/resources/products/platform/mongodb-atlas-tutorial#creating-a-mongodb-atlas-account) 
+    - Using the link, "Sign up" or "Sign in" for a [MongoDB Cloud account](https://www.mongodb.com/resources/products/platform/mongodb-atlas-tutorial#creating-a-mongodb-atlas-account) 
 
     ![Sign up or Sign in for a MongoDB account](aws_mongodb_sample_dir/images/MongoDB_Signup_page.png)
         
         
-        Note: It is sufficient to setup only the MongoDB Cloud Account for now. During the course of this demo setup, we build the Project, Cluster, and Database.
+        Note: It is sufficient to setup only the MongoDB Cloud Account for Organizations and Projects. During the course of this demo setup, we build the a new Project, Cluster, and Database.
 
 
     - Create an [API Key in an Organization](https://www.mongodb.com/docs/atlas/configure-api-access/#create-an-api-key-in-an-organization) and grant project owner permission and open access (0.0.0.0/1) for this demo purpose. 
 
             Note: Please note this setting is not suitable for production environment and the access should be restricted based on your security policies.
+
+    ![Organization_API_Access](aws_mongodb_sample_dir/images/Organization_API_access.png)
 
     - Get the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) Installed & Configured
     - Get the [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) Installed & Configured
@@ -65,7 +67,7 @@ high-performing, and reliable identity store.
     ``` 
 
 
-    - Set up the Python virtual environment  
+    - Set up the [Python virtual](https://docs.python.org/3/library/venv.html) environment  
 
         - Python3 - `yum install -y python3`
         - Python Pip - `yum install -y python-pip`
@@ -104,24 +106,35 @@ high-performing, and reliable identity store.
         cd ..
         ```
         
-    - Set up the values for the Global Parameters [global_args.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/global_args.py)
+    - Verify the values for the Global Parameters [global_args.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/global_args.py) and update as per your requirements.
 
     - Set up the secret key values and prerequisite roles and permission for MongoDB CDK.
 
         A. Login to AWS Console and run the [AWS CloudFormation template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-new-stack.html) with the [profile-secret-role.yaml](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/profile-secret-role.yaml) file. 
+
+
+        ![Set up the prerequisite for AWS MongoDB CDK](aws_mongodb_sample_dir/images/AWS_CDK_MongoDB_prerequisite.png)
     
         This template creates secrets in the AWS Secret Manager to store the following:
     
         - MonogDB Atlas Organization ID
-        - MongoDB Atlas Organization API credentials - Public Key and Private Key. Note this is created during the prerequisite.
+
+         ![MongoDB Atlas Organization ID](aws_mongodb_sample_dir/images/Org_id.png)
+
+        - MongoDB Atlas Organization API credentials - Public Key and Private Key. 
+
+         ![Organization_API_access](aws_mongodb_sample_dir/images/Organization_API_access.png)
+
         - MongoDB Atlas Database User Credentials - User Name and Password
+        
         - AWS Account ID
 
         - The template also creates the role and permissions required to set up the MongoDB Atlas through AWS CDK
 
         B. Run the Python script [mongodb_prep_setup.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/mongodb_prep_setup.py) to activate the Cloudformation registry - MongoDB (private) extensions with the appropriate role.
 
-        C. Set up the AWS CDK Bootstrap and check the CDK stacks - **AwsMongodbAtlasCreateStack**  & **AwsMongodbSampleStack** - are listed.
+
+    - Set up the AWS CDK Bootstrap and check the CDK stacks - **AwsMongodbAtlasCreateStack**  & **AwsMongodbSampleStack** - are listed.
     
 
         ```bash       
