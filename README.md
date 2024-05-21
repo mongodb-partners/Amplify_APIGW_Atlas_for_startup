@@ -38,21 +38,17 @@ high-performing, and reliable identity store.
 
 1.  ## Prerequisites
 
-    This demo, instructions, scripts, and cloudformation template are designed to be run in `us-east-1`. With a few
-    modifications, you can try it out in other regions as well. Make sure to change REGION_NAME in [global_args.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/global_args.py) if not
-    using US-EAST-1
-
     - Using the link "Sign up" or "Sign in" for a [MongoDB Cloud account](https://www.mongodb.com/resources/products/platform/mongodb-atlas-tutorial#creating-a-mongodb-atlas-account) 
 
     ![Sign up or Sign in for a MongoDB account](aws_mongodb_sample_dir/images/MongoDB_Signup_page.png)
         
         
-    Note: It is sufficient to setup only the MongoDB Cloud Account for now. During the course of this demo setup, we build the Project, Cluster, and Database.
+        Note: It is sufficient to setup only the MongoDB Cloud Account for now. During the course of this demo setup, we build the Project, Cluster, and Database.
 
 
     - Create an [API Key in an Organization](https://www.mongodb.com/docs/atlas/configure-api-access/#create-an-api-key-in-an-organization) and grant project owner permission and open access (0.0.0.0/1) for this demo purpose. 
 
-    Note: Please note this setting is not suitable for production environment and the access should be restricted based on your security policies.
+            Note: Please note this setting is not suitable for production environment and the access should be restricted based on your security policies.
 
     - Get the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) Installed & Configured
     - Get the [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_install) Installed & Configured
@@ -112,26 +108,26 @@ high-performing, and reliable identity store.
 
     - Set up the secret key values and prerequisite roles and permission for MongoDB CDK.
 
-    A. Login to AWS Console and run the [AWS CloudFormation template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-new-stack.html) with the [profile-secret-role.yaml](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/profile-secret-role.yaml) file. 
+        A. Login to AWS Console and run the [AWS CloudFormation template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-new-stack.html) with the [profile-secret-role.yaml](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/profile-secret-role.yaml) file. 
     
-    This template creates secrets in the AWS Secret Manager to store the following:
+        This template creates secrets in the AWS Secret Manager to store the following:
     
-    - MonogDB Atlas Organization ID
-    - MongoDB Atlas Organization API credentials - Public Key and Private Key. Note this is created during the prerequisite.
-    - MongoDB Atlas Database User Credentials - User Name and Password
-    - AWS Account ID
+        - MonogDB Atlas Organization ID
+        - MongoDB Atlas Organization API credentials - Public Key and Private Key. Note this is created during the prerequisite.
+        - MongoDB Atlas Database User Credentials - User Name and Password
+        - AWS Account ID
 
-    - The template also creates the role and permissions required to set up the MongoDB Atlas through AWS CDK
+        - The template also creates the role and permissions required to set up the MongoDB Atlas through AWS CDK
 
-    B. Run the Python script [mongodb_prep_setup.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/mongodb_prep_setup.py) to activate the Cloudformation registry - MongoDB (private) extensions with the appropriate role.
+        B. Run the Python script [mongodb_prep_setup.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/mongodb_prep_setup.py) to activate the Cloudformation registry - MongoDB (private) extensions with the appropriate role.
 
-    C. Set up the AWS CDK Bootstrap and check the CDK stacks - **AwsMongodbAtlasCreateStack**  & **AwsMongodbSampleStack** - are listed.
+        C. Set up the AWS CDK Bootstrap and check the CDK stacks - **AwsMongodbAtlasCreateStack**  & **AwsMongodbSampleStack** - are listed.
     
 
-    ```bash       
-    cdk bootstrap
-    cdk ls
-    ``` 
+        ```bash       
+        cdk bootstrap
+        cdk ls
+        ``` 
 
 1.  ## Deploying the application
 
