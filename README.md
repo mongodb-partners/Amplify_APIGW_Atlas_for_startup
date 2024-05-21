@@ -226,7 +226,7 @@ high-performing, and reliable identity store.
 
 
     ```bash
-    cd aws_mongodb_sample/frontend
+    cd frontend
     ```
 
     Add the URL you retrieved in the above test step to the TodoList.jsx script:

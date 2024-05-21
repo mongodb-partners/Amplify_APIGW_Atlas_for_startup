@@ -14,7 +14,7 @@ function TodoList() {
         fetchTodos();
     }, []);
 
-    const apiEndpoint = "https://fm1kzgacr5.execute-api.us-east-1.amazonaws.com/dev/todos";
+    const apiEndpoint = "https://xxxxxx.execute-api.us-east-1.amazonaws.com/dev/todos";
 
     const fetchTodos = async () => {
         try {
