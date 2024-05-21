@@ -71,42 +71,42 @@ high-performing, and reliable identity store.
 
     - Set up the Python virtual environment  
 
-    - Python3 - `yum install -y python3`
-    - Python Pip - `yum install -y python-pip`
-    - Virtualenv - `pip3 install virtualenv`
+        - Python3 - `yum install -y python3`
+        - Python Pip - `yum install -y python-pip`
+        - Virtualenv - `pip3 install virtualenv`
 
     - Get the application code
 
-    ```bash
-    git clone https://github.com/mongodb-partners/Microservice_Application_with_MongoDBAtlas_AWSCDK_APIGW_Lambda.git
-    cd aws_mongodb_sample_dir
-    ```
+        ```bash
+        git clone https://github.com/mongodb-partners/Microservice_Application_with_MongoDBAtlas_AWSCDK_APIGW_Lambda.git
+        cd aws_mongodb_sample_dir
+        ```
 
 
     - We will use `cdk` to make our deployments easier. Let's go ahead and install the necessary components.
 
 
-    ```bash
-    # You should have npm pre-installed
-    # If you DONT have cdk installed
-    npm install -g aws-cdk
-    ```
+        ```bash
+        # You should have npm pre-installed
+        # If you DONT have cdk installed
+        npm install -g aws-cdk
+        ```
 
     - Set up the Python virtual environment
 
-    **Make sure you are in the root directory**
+        **Make sure you are in the root directory**
     
-    ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate
-    pip3 install -r requirements.txt
-    ```
+        ```bash
+        python3 -m venv .venv
+        source .venv/bin/activate
+        pip3 install -r requirements.txt
+        ```
     - Set up the Python dependencies
-    ```bash
-    cd aws_mongodb_sample
-    pip install --target ./dependencies pymongo
-    cd ..
-    ```
+        ```bash
+        cd aws_mongodb_sample
+        pip install --target ./dependencies pymongo
+        cd ..
+        ```
         
     - Set up the values for the Global Parameters [global_args.py](https://github.com/mongodb-partners/Amplify_APIGW_Atlas_for_startup/blob/main/aws_mongodb_sample_dir/global_args.py)
 
@@ -252,7 +252,7 @@ The Amplify backend and frontend need to be cleaned up manually.
 
 ## PrivateLink Setup
 
-To set up the MongoDB Atlas cluster with PrivateLink, follow the steps from the blog. 
+To set up the MongoDB Atlas cluster with PrivateLink, follow the steps from the [blog](https://aws.amazon.com/blogs/apn/connecting-applications-securely-to-a-mongodb-atlas-data-plane-with-aws-privatelink/). 
 
 ## Troubleshooting
 
