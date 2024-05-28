@@ -249,16 +249,14 @@ high-performing, and reliable identity store.
 
  Then, you need to initialize Amplify. 
 
-    ```bash
     amplify init
-    ```
 
 Next, we need to add hosting to the project. Choose `Hosting with Amplify Console` and `Manual deployment`:
 
 
-    ```bash
+
     amplify hosting add
-    ```
+
 
 ![Amplify Initialize](aws_mongodb_sample_dir/images/amplify_init.png)
 
@@ -266,18 +264,17 @@ Next, we need to add hosting to the project. Choose `Hosting with Amplify Consol
 Whenever you make changes:
 
 
-    ```bash
+
     amplify push
-    ```
 
 ![Amplify Push](aws_mongodb_sample_dir/images/amplify_push.png)
 
 Finally, we can publish the frontend:
 
 
-    ```bash
+
     amplify publish
-    ```
+
 
 ![Amplify Publish](aws_mongodb_sample_dir/images/amplify_publish.png)
 
